@@ -132,6 +132,44 @@ def _match_sebi_rules(action: str, regulations: list[dict]) -> dict | None:
     return None
 
 
+def _build_guidance(action: str, allowed: bool, stage: str, reason: str, rule: str | None) -> dict:
+    action_text = _normalize(action)
+
+    if allowed:
+        return {
+            "warning": "This action still deserves a quick review before execution.",
+            "suggestion": "Proceed gradually and keep position sizing aligned with your portfolio rules.",
+            "explanation": "Fence allowed the action because it fits the goal, does not break your personal rules, and does not trigger the core SEBI checks configured here.",
+        }
+
+    if "bitcoin" in action_text or "crypto" in action_text:
+        return {
+            "warning": "This is a speculative asset and can sharply increase portfolio risk.",
+            "suggestion": "Consider a diversified SIP or a gradual investment in a large-cap company instead of an all-in crypto position.",
+            "explanation": "The action was blocked because it conflicts with a low-to-medium-risk portfolio and with your rule to avoid cryptocurrency and highly speculative assets.",
+        }
+
+    if stage == "sebi_rules":
+        return {
+            "warning": "This action raises a compliance concern under the SEBI rule set shown on the page.",
+            "suggestion": "Choose an action based on public information and standard investing discipline instead.",
+            "explanation": f"Fence blocked the action because it matched a SEBI-sensitive pattern{f' under {rule}' if rule else ''}. The reason is to prevent manipulative, insider-based, or improperly advised activity.",
+        }
+
+    if stage == "intent_match":
+        return {
+            "warning": "This action does not fit the portfolio objective currently saved in Fence.",
+            "suggestion": "Use a smaller, diversified, long-term action that matches the goal of steady growth.",
+            "explanation": "Fence blocked the action because the request did not align with the stated investment objective. High concentration and short-term speculation do not suit a steady long-term plan.",
+        }
+
+    return {
+        "warning": "This action breaks one of the custom safety rules set for the portfolio.",
+        "suggestion": "Try a lower-risk action with better diversification and clearer alignment to the saved rules.",
+        "explanation": f"Fence blocked the action because it violated a rule{f': {rule}' if rule else ''}. The system prioritizes personal constraints before allowing the idea to move forward.",
+    }
+
+
 async def check_intent(user_goal: str, action: str) -> dict:
     action_text = _normalize(action)
     goal_text = _normalize(user_goal)
@@ -263,34 +301,38 @@ async def enforce(action: str) -> dict:
 
     intent_result = await check_intent(user_goal, action)
     if not intent_result.get("match"):
-        return {
+        result = {
             "allowed": False,
             "stage": "intent_match",
             "reason": intent_result.get("reason"),
             "rule": None,
         }
+        return {**result, **_build_guidance(action, False, result["stage"], result["reason"], result["rule"])}
 
     rules_result = await check_user_rules(user_rules, action)
     if rules_result.get("violated"):
-        return {
+        result = {
             "allowed": False,
             "stage": "user_rules",
             "reason": rules_result.get("reason"),
             "rule": rules_result.get("rule"),
         }
+        return {**result, **_build_guidance(action, False, result["stage"], result["reason"], result["rule"])}
 
     sebi_result = await check_sebi_rules(sebi_regulations, action)
     if sebi_result.get("violated"):
-        return {
+        result = {
             "allowed": False,
             "stage": "sebi_rules",
             "reason": sebi_result.get("reason"),
             "rule": sebi_result.get("regulation"),
         }
+        return {**result, **_build_guidance(action, False, result["stage"], result["reason"], result["rule"])}
 
-    return {
+    result = {
         "allowed": True,
         "stage": "all_passed",
         "reason": "Action aligns with the portfolio goal, user rules, and SEBI compliance checks.",
         "rule": None,
     }
+    return {**result, **_build_guidance(action, True, result["stage"], result["reason"], result["rule"])}

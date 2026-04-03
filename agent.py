@@ -39,6 +39,9 @@ async def run_agent(user_input: str) -> dict:
         "stage": result["stage"],
         "reason": result["reason"],
         "rule": result["rule"],
+        "warning": result.get("warning"),
+        "suggestion": result.get("suggestion"),
+        "explanation": result.get("explanation"),
     }
 
     save_log(log_entry)
@@ -54,5 +57,8 @@ async def run_agent(user_input: str) -> dict:
         "stage": result["stage"],
         "reason": result["reason"],
         "rule": result["rule"],
+        "warning": result.get("warning"),
+        "suggestion": result.get("suggestion"),
+        "explanation": result.get("explanation"),
         "timestamp": log_entry["timestamp"],
     }

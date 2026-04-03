@@ -2,38 +2,24 @@
   "regulations": [
     {
       "title": "SEBI PFUTP Regulations, 2003",
-      "focus": "Fraud, manipulation, wash trades, artificial volume",
-      "summary": "The Securities and Exchange Board of India (Prohibition of Fraudulent and Unfair Trade Practices relating to Securities Market) Regulations, 2003 target manipulative, deceptive, and unfair practices in the securities market.",
-      "check": "Fence blocks actions that look like pump-and-dump activity, fake volume creation, circular trading, or other market manipulation.",
+      "focus": "Market manipulation",
+      "summary": "Blocks unfair practices like pump-and-dump behaviour, wash trades, or artificial market activity.",
+      "check": "Fence stops actions that look manipulative or intended to create false market signals.",
       "source": "https://www.sebi.gov.in/legal/regulations/dec-2025/securities-and-exchange-board-of-india-prohibition-of-fraudulent-and-unfair-trade-practices-relating-to-securities-market-regulations-2003-last-amended-on-december-05-2025-_98694.html"
     },
     {
       "title": "SEBI PIT Regulations, 2015",
-      "focus": "Insider trading and unpublished price sensitive information",
-      "summary": "The SEBI (Prohibition of Insider Trading) Regulations, 2015 prohibit trading while in possession of unpublished price sensitive information and set controls around UPSI handling.",
-      "check": "Fence blocks actions that rely on insider tips, unpublished price-sensitive information, or trading ahead of confidential announcements.",
+      "focus": "Insider trading",
+      "summary": "Covers trading based on unpublished price sensitive information or inside information.",
+      "check": "Fence blocks prompts that rely on insider tips or confidential announcements.",
       "source": "https://www.sebi.gov.in/legal/regulations/dec-2025/securities-and-exchange-board-of-india-prohibition-of-insider-trading-regulations-2015-last-amended-on-december-05-2025-_98695.html"
     },
     {
       "title": "SEBI Investment Advisers Regulations, 2013",
-      "focus": "Who can act as an investment adviser and how advice is delivered",
-      "summary": "The SEBI (Investment Advisers) Regulations, 2013 require registration for investment advisers and establish conduct standards for advice provided to clients.",
-      "check": "Fence flags actions that sound like regulated advice activity, especially where someone is presented as an adviser without the right compliance posture.",
+      "focus": "Advice and return promises",
+      "summary": "Regulates investment advice and discourages misleading advice practices or improper return promises.",
+      "check": "Fence flags actions that sound like unfit advisory conduct or fixed-return promises.",
       "source": "https://www.sebi.gov.in/media/press-releases/aug-2013/sebi-investment-advisers-regulations-2013_25260.html"
-    },
-    {
-      "title": "SEBI Research Analysts Regulations, 2014",
-      "focus": "Research recommendations, disclosures, and analyst conduct",
-      "summary": "The SEBI (Research Analysts) Regulations, 2014 regulate issuance of investment research reports and recommendations, including disclosure and conduct obligations.",
-      "check": "Fence treats recommendation-style claims with extra caution, especially if they imply certainty, hidden conflicts, or unsupported return promises.",
-      "source": "https://www.sebi.gov.in/legal/regulations/sep-2014/sebi-research-analysts-regulations-2014_27895.html"
-    },
-    {
-      "title": "SEBI Portfolio Managers Regulations, 2020",
-      "focus": "Managing securities portfolios on behalf of clients",
-      "summary": "The SEBI (Portfolio Managers) Regulations, 2020 govern entities that manage securities portfolios for clients and require the proper registration and operating framework.",
-      "check": "Fence blocks actions that imply managing or trading securities portfolios for other people without the appropriate regulatory setup.",
-      "source": "https://www.sebi.gov.in/sebi_data/attachdocs/feb-2020/1581606214719.pdf"
     }
   ]
 }

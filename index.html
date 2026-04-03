@@ -3,29 +3,28 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fence | SEBI-Aware Investment Safety Layer</title>
+  <title>Fence | Investment Safety Review</title>
   <style>
     :root {
-      --bg: #09030a;
-      --panel: rgba(22, 7, 18, 0.86);
-      --panel-strong: rgba(35, 10, 28, 0.96);
-      --border: rgba(255, 118, 180, 0.18);
-      --border-strong: rgba(255, 118, 180, 0.42);
-      --text: #fff4fb;
-      --muted: #d7b7c9;
-      --soft: #a67e93;
-      --pink: #ff4fa0;
-      --pink-strong: #ff278d;
-      --pink-deep: #711342;
-      --green: #6cf0a8;
-      --red: #ff7d96;
-      --shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+      --bg: #090308;
+      --panel: rgba(21, 8, 18, 0.94);
+      --panel-soft: rgba(31, 12, 25, 0.9);
+      --border: rgba(255, 112, 170, 0.22);
+      --text: #fff6fb;
+      --muted: #d7b6c7;
+      --soft: #a68093;
+      --pink: #ff4f9f;
+      --pink-dark: #8b174d;
+      --green: #6ee7a8;
+      --red: #ff748f;
+      --amber: #ffc75f;
+      --shadow: 0 22px 60px rgba(0, 0, 0, 0.38);
     }
 
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
     }
 
     body {
@@ -33,322 +32,200 @@
       font-family: "Segoe UI", sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at top left, rgba(255, 79, 160, 0.2), transparent 30%),
-        radial-gradient(circle at 85% 15%, rgba(255, 39, 141, 0.12), transparent 25%),
-        linear-gradient(135deg, #040104 0%, #12040f 45%, #050206 100%);
-      padding: 28px;
+        radial-gradient(circle at top left, rgba(255, 79, 159, 0.16), transparent 28%),
+        linear-gradient(145deg, #030103 0%, #12050e 45%, #050206 100%);
+      padding: 24px;
     }
 
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-      background-size: 32px 32px;
-      pointer-events: none;
-      opacity: 0.35;
-    }
-
-    .shell {
-      max-width: 1240px;
+    .app {
+      max-width: 1180px;
       margin: 0 auto;
-      position: relative;
-      z-index: 1;
     }
 
-    .hero {
+    .header {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      padding: 28px;
+      margin-bottom: 22px;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .brand {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    .status {
+      color: var(--green);
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .header-copy {
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 760px;
+    }
+
+    .layout {
       display: grid;
-      grid-template-columns: 1.4fr 0.9fr;
-      gap: 24px;
-      margin-bottom: 24px;
+      grid-template-columns: 1.06fr 0.94fr;
+      gap: 22px;
     }
 
-    .hero-panel,
+    .stack {
+      display: grid;
+      gap: 22px;
+    }
+
     .card {
       background: var(--panel);
       border: 1px solid var(--border);
       border-radius: 24px;
       box-shadow: var(--shadow);
-      backdrop-filter: blur(14px);
+      padding: 24px;
     }
 
-    .hero-panel {
-      padding: 32px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-panel::after {
-      content: "";
-      position: absolute;
-      right: -50px;
-      top: -60px;
-      width: 180px;
-      height: 180px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255, 79, 160, 0.28), transparent 70%);
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      color: var(--muted);
-      margin-bottom: 18px;
-    }
-
-    .live-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: var(--green);
-      box-shadow: 0 0 12px rgba(108, 240, 168, 0.8);
-    }
-
-    h1 {
-      font-size: clamp(2.1rem, 4vw, 3.8rem);
-      line-height: 1;
-      margin-bottom: 16px;
-      letter-spacing: -0.04em;
-    }
-
-    .hero-copy {
-      color: var(--muted);
-      font-size: 1rem;
-      line-height: 1.7;
-      max-width: 680px;
-      margin-bottom: 22px;
-    }
-
-    .hero-tags,
-    .quick-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .pill {
-      border: 1px solid var(--border-strong);
-      background: rgba(255, 79, 160, 0.12);
-      color: var(--text);
-      padding: 9px 14px;
-      border-radius: 999px;
-      font-size: 13px;
-    }
-
-    .summary-panel {
-      padding: 28px;
-      display: grid;
-      gap: 14px;
-      align-content: start;
-    }
-
-    .summary-panel h2,
     .card h2 {
-      font-size: 0.85rem;
+      font-size: 0.88rem;
       text-transform: uppercase;
       letter-spacing: 0.14em;
       color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .subtext {
+      color: var(--soft);
+      line-height: 1.6;
+      font-size: 0.95rem;
       margin-bottom: 16px;
     }
 
-    .metric-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .metric {
-      background: rgba(255, 255, 255, 0.03);
+    .goal-display,
+    .why-box,
+    .rule-item,
+    .regulation-card,
+    .log-entry,
+    .result-box {
+      background: var(--panel-soft);
       border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: 18px;
+    }
+
+    .goal-display,
+    .why-box,
+    .result-box,
+    .log-entry,
+    .regulation-card {
       padding: 16px;
-    }
-
-    .metric .label {
-      font-size: 12px;
-      color: var(--soft);
-      margin-bottom: 8px;
-    }
-
-    .metric .value {
-      font-size: 1.6rem;
-      font-weight: 700;
-    }
-
-    .metric .note {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 6px;
-      line-height: 1.5;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: 24px;
-    }
-
-    .stack {
-      display: grid;
-      gap: 24px;
-    }
-
-    .card {
-      padding: 26px;
     }
 
     textarea,
     input[type="text"] {
       width: 100%;
-      border-radius: 18px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      background: rgba(0, 0, 0, 0.28);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      background: rgba(0, 0, 0, 0.24);
       color: var(--text);
-      padding: 15px 16px;
-      font-size: 0.97rem;
-      line-height: 1.5;
+      padding: 14px 15px;
+      font-size: 0.96rem;
       outline: none;
-      transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease;
     }
 
     textarea:focus,
     input[type="text"]:focus {
       border-color: var(--pink);
-      background: rgba(0, 0, 0, 0.42);
-      transform: translateY(-1px);
     }
 
-    .button-row {
+    .button-row,
+    .chips {
       display: flex;
+      gap: 10px;
       flex-wrap: wrap;
-      gap: 12px;
       margin-top: 14px;
     }
 
     button {
       border: none;
-      border-radius: 16px;
-      padding: 12px 18px;
-      font-size: 0.95rem;
+      border-radius: 14px;
+      padding: 11px 16px;
+      font-size: 0.94rem;
       font-weight: 700;
       cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
-    }
-
-    button:hover {
-      transform: translateY(-2px);
     }
 
     .primary-btn {
-      background: linear-gradient(135deg, var(--pink), var(--pink-strong));
-      color: #14040c;
-      box-shadow: 0 14px 30px rgba(255, 39, 141, 0.28);
+      background: linear-gradient(135deg, var(--pink), #ff2d89);
+      color: #18050d;
     }
 
-    .secondary-btn {
-      background: rgba(255, 255, 255, 0.04);
+    .secondary-btn,
+    .chip,
+    .mini-btn {
+      background: rgba(255, 255, 255, 0.06);
       color: var(--text);
       border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    .goal-display,
-    .insight-box {
-      border-radius: 18px;
-      padding: 16px;
-      background: rgba(0, 0, 0, 0.26);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    .section-copy {
-      color: var(--soft);
-      line-height: 1.6;
-      margin-bottom: 14px;
-      font-size: 0.94rem;
-    }
-
-    .chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 16px;
-    }
-
-    .chip {
-      background: rgba(255, 79, 160, 0.1);
-      color: var(--text);
-      border: 1px solid rgba(255, 79, 160, 0.22);
-      padding: 10px 14px;
-      border-radius: 999px;
-      font-size: 13px;
-      cursor: pointer;
-    }
-
     .loading {
-      margin-top: 14px;
-      color: var(--muted);
-      font-size: 14px;
       display: none;
+      color: var(--muted);
+      margin-top: 12px;
     }
 
     .result-box {
       display: none;
       margin-top: 16px;
-      border-radius: 22px;
-      padding: 20px;
-      border: 1px solid transparent;
-      background: rgba(0, 0, 0, 0.24);
     }
 
     .result-box.allowed {
-      border-color: rgba(108, 240, 168, 0.24);
-      background: rgba(18, 63, 40, 0.26);
+      border-color: rgba(110, 231, 168, 0.26);
     }
 
     .result-box.blocked {
-      border-color: rgba(255, 125, 150, 0.26);
-      background: rgba(92, 17, 34, 0.28);
+      border-color: rgba(255, 116, 143, 0.26);
     }
 
-    .result-status {
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .result-status.allowed {
-      color: var(--green);
-    }
-
-    .result-status.blocked {
-      color: var(--red);
-    }
-
-    .result-detail {
-      line-height: 1.7;
+    .result-list {
+      list-style: disc;
+      padding-left: 24px;
+      display: grid;
+      gap: 14px;
       color: var(--text);
+      line-height: 1.6;
     }
 
-    .result-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 14px;
-    }
-
-    .meta-pill {
-      background: rgba(255, 255, 255, 0.06);
+    .result-label {
       color: var(--muted);
-      border-radius: 999px;
-      padding: 7px 12px;
-      font-size: 12px;
+      font-weight: 700;
+      margin-right: 8px;
+    }
+
+    .decision-blocked {
+      color: var(--red);
+      font-weight: 800;
+    }
+
+    .decision-allowed {
+      color: var(--green);
+      font-weight: 800;
+    }
+
+    .warning-line {
+      margin-top: 14px;
+      color: var(--amber);
+      line-height: 1.6;
     }
 
     .rule-list,
@@ -358,79 +235,59 @@
       gap: 12px;
     }
 
-    .rule-item,
-    .regulation-card,
-    .log-entry {
-      border-radius: 18px;
-      padding: 16px;
-      background: rgba(0, 0, 0, 0.26);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-    }
-
     .rule-item {
+      padding: 14px 16px;
       display: flex;
-      gap: 12px;
       align-items: flex-start;
+      gap: 12px;
     }
 
-    .rule-item span {
+    .rule-text {
       flex: 1;
-      color: var(--text);
       line-height: 1.6;
-    }
-
-    .icon-badge {
-      width: 32px;
-      height: 32px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 10px;
-      background: rgba(255, 79, 160, 0.14);
-      color: var(--pink);
-      flex-shrink: 0;
-      font-weight: 700;
     }
 
     .mini-btn {
       padding: 8px 12px;
-      border-radius: 12px;
       font-size: 12px;
-      background: rgba(255, 255, 255, 0.06);
       color: var(--red);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .regulation-card h3 {
-      font-size: 1rem;
-      margin-bottom: 8px;
     }
 
     .regulation-focus {
-      display: inline-flex;
-      margin-bottom: 10px;
       color: var(--pink);
       font-size: 12px;
       text-transform: uppercase;
       letter-spacing: 0.12em;
+      margin-bottom: 8px;
+      display: inline-block;
+    }
+
+    .regulation-card h3 {
+      margin-bottom: 8px;
+      font-size: 1rem;
     }
 
     .regulation-card p {
       color: var(--muted);
-      line-height: 1.65;
-      font-size: 0.93rem;
-      margin-bottom: 10px;
+      line-height: 1.6;
+      margin-bottom: 8px;
+      font-size: 0.94rem;
     }
 
     .regulation-link {
-      color: #ff9ccc;
+      color: #ff9dca;
       text-decoration: none;
-      font-size: 0.92rem;
-      font-weight: 600;
+      font-weight: 700;
     }
 
-    .regulation-link:hover {
-      text-decoration: underline;
+    .why-box h3 {
+      margin-bottom: 10px;
+      font-size: 1rem;
+    }
+
+    .why-box p {
+      color: var(--muted);
+      line-height: 1.65;
     }
 
     .log-entry.allowed {
@@ -441,125 +298,77 @@
       border-left: 4px solid var(--red);
     }
 
-    .log-topline {
+    .log-top {
       display: flex;
       gap: 10px;
-      align-items: center;
       flex-wrap: wrap;
+      align-items: center;
       margin-bottom: 8px;
     }
 
     .badge {
       border-radius: 999px;
+      padding: 5px 10px;
       font-size: 12px;
-      padding: 6px 10px;
-      font-weight: 700;
+      font-weight: 800;
     }
 
     .badge.allowed {
-      background: rgba(108, 240, 168, 0.14);
+      background: rgba(110, 231, 168, 0.14);
       color: var(--green);
     }
 
     .badge.blocked {
-      background: rgba(255, 125, 150, 0.14);
+      background: rgba(255, 116, 143, 0.14);
       color: var(--red);
     }
 
     .log-action {
-      color: var(--text);
-      font-weight: 600;
+      font-weight: 700;
     }
 
     .log-reason,
+    .log-extra,
     .empty-state {
       color: var(--muted);
       line-height: 1.6;
+      font-size: 0.94rem;
     }
 
     .log-meta {
       color: var(--soft);
       font-size: 12px;
-      margin-top: 10px;
-    }
-
-    .footnote {
-      margin-top: 18px;
-      color: var(--soft);
-      font-size: 12px;
-      line-height: 1.7;
+      margin-top: 8px;
     }
 
     @media (max-width: 980px) {
-      .hero,
-      .grid {
+      .layout {
         grid-template-columns: 1fr;
       }
 
       body {
         padding: 16px;
       }
-
-      .hero-panel,
-      .card,
-      .summary-panel {
-        padding: 22px;
-      }
     }
   </style>
 </head>
 <body>
-  <div class="shell">
-    <section class="hero">
-      <div class="hero-panel">
-        <div class="eyebrow">
-          <span class="live-dot"></span>
-          Live compliance layer
-        </div>
-        <h1>Fence keeps risky investing ideas from slipping through.</h1>
-        <p class="hero-copy">
-          Test actions against your portfolio goal, your personal rules, and real SEBI regulation themes before anything goes forward.
-          The dashboard is tuned for low-to-medium-risk investors and now blocks obvious high-risk prompts like putting everything into bitcoin.
-        </p>
-        <div class="hero-tags">
-          <span class="pill">SEBI-aware</span>
-          <span class="pill">Portfolio guardrails</span>
-          <span class="pill">Pink + black interface</span>
-        </div>
+  <div class="app">
+    <section class="header">
+      <div class="header-top">
+        <div class="brand">Fence</div>
+        <div class="status">Live review</div>
       </div>
-
-      <aside class="hero-panel summary-panel">
-        <h2>Risk Snapshot</h2>
-        <div class="metric-grid">
-          <div class="metric">
-            <div class="label">Goal type</div>
-            <div class="value">Steady</div>
-            <div class="note">Built for long-term, lower-volatility decisions.</div>
-          </div>
-          <div class="metric">
-            <div class="label">Default review</div>
-            <div class="value">3-stage</div>
-            <div class="note">Intent match, personal rules, SEBI checks.</div>
-          </div>
-          <div class="metric">
-            <div class="label">Speculation flag</div>
-            <div class="value">Hard stop</div>
-            <div class="note">All-in crypto and similar prompts are blocked.</div>
-          </div>
-          <div class="metric">
-            <div class="label">Regulation source</div>
-            <div class="value">Official</div>
-            <div class="note">Cards below link back to SEBI source material.</div>
-          </div>
-        </div>
-      </aside>
+      <p class="header-copy">
+        Review an investing action against your portfolio goal, your own rules, and a few basic SEBI regulations before moving ahead.
+      </p>
     </section>
 
-    <section class="grid">
+    <section class="layout">
       <div class="stack">
         <div class="card">
           <h2>User Goal</h2>
-          <p class="section-copy">Update the investment objective that Fence uses when it judges whether an action fits your plan.</p>
+          <p class="subtext">This goal is used to judge whether an action fits the kind of investor profile you want to maintain.</p>
           <div class="goal-display" id="goal-display">Loading goal...</div>
           <div style="height: 14px;"></div>
           <textarea id="goal-input" rows="4" placeholder="Describe your investment goal..."></textarea>
@@ -570,32 +379,30 @@
 
         <div class="card">
           <h2>Test an Action</h2>
-          <p class="section-copy">Try a prompt and see whether Fence allows it, blocks it, or flags it under personal or SEBI compliance rules.</p>
-          <input type="text" id="action-input" placeholder='Try: "put everything in bitcoin"' />
+          <input type="text" id="action-input" placeholder='Example: "Buy Tesla stock"' />
           <div class="chips">
+            <button class="chip" onclick="setQuickAction('Buy Tesla stock')">Buy Tesla stock</button>
             <button class="chip" onclick="setQuickAction('put everything in bitcoin')">Put everything in bitcoin</button>
-            <button class="chip" onclick="setQuickAction('buy HDFC Bank gradually over 12 months')">Gradual blue-chip buy</button>
             <button class="chip" onclick="setQuickAction('trade using insider information before earnings')">Use insider info</button>
-            <button class="chip" onclick="setQuickAction('promise a client fixed 18% annual returns')">Promise fixed returns</button>
           </div>
           <div class="button-row">
-            <button class="primary-btn" onclick="runAction()">Run Through Fence</button>
+            <button class="primary-btn" onclick="runAction()">Run Review</button>
             <button class="secondary-btn" onclick="clearAction()">Clear</button>
           </div>
-          <div class="loading" id="loading">Fence is reviewing the action...</div>
+          <div class="loading" id="loading">Reviewing action...</div>
           <div class="result-box" id="result-box">
-            <div class="result-status" id="result-status"></div>
-            <div class="result-detail" id="result-detail"></div>
-            <div class="result-meta">
-              <span class="meta-pill" id="result-stage"></span>
-              <span class="meta-pill" id="result-rule"></span>
-            </div>
+            <ul class="result-list">
+              <li><span class="result-label">Action:</span><span id="result-action"></span></li>
+              <li><span class="result-label">Decision:</span><span id="result-decision"></span></li>
+              <li><span class="result-label">Reason:</span><span id="result-reason"></span></li>
+            </ul>
+            <div class="warning-line" id="result-warning"></div>
+            <div class="warning-line" id="result-suggestion"></div>
           </div>
         </div>
 
         <div class="card">
           <h2>Personal Rules</h2>
-          <p class="section-copy">These are the custom guardrails Fence enforces before it evaluates broader regulatory risks.</p>
           <div class="rule-list" id="rules-list"></div>
           <div style="height: 14px;"></div>
           <input type="text" id="new-rule" placeholder="Add a new rule in plain English..." />
@@ -603,45 +410,50 @@
             <button class="primary-btn" onclick="addRule()">Add Rule</button>
           </div>
         </div>
+
+        <div class="card">
+          <h2>Live Action Log</h2>
+          <p class="subtext">Recent reviews are shown here, with a fallback local history to keep the log visible.</p>
+          <div class="log-list" id="log-list"></div>
+        </div>
       </div>
 
       <div class="stack">
         <div class="card">
-          <h2>SEBI Regulations</h2>
-          <p class="section-copy">The site now shows actual SEBI regulation names with official sources and a plain-English explanation of what Fence checks for.</p>
-          <div class="regulation-list" id="sebi-list"></div>
-          <p class="footnote">
-            These cards summarize official SEBI regulations and related official material. They are helpful compliance cues, not legal advice.
-          </p>
+          <h2>Why This Was Blocked</h2>
+          <div class="why-box">
+            <h3 id="why-title">No action reviewed yet</h3>
+            <p id="why-text">When you test an action, Fence will explain in simple language why it allowed or blocked it and what would be more suitable.</p>
+          </div>
         </div>
 
         <div class="card">
-          <h2>What Suits This Site</h2>
-          <div class="insight-box">
-            A quick-risk dashboard fits this product well, so the interface now highlights concentration risk, speculative prompts, and SEBI-sensitive actions before you even review the full log.
-          </div>
-          <div class="chips" style="margin-top: 14px;">
-            <span class="pill">Concentration risk</span>
-            <span class="pill">Speculation alert</span>
-            <span class="pill">Compliance-first</span>
-          </div>
+          <h2>Basic SEBI Regulations</h2>
+          <p class="subtext">Only a few core regulation themes are shown here for quick reference.</p>
+          <div class="regulation-list" id="sebi-list"></div>
         </div>
       </div>
-    </section>
-
-    <section class="card" style="margin-top: 24px;">
-      <h2>Live Action Log</h2>
-      <p class="section-copy">Every test run is recorded so you can see which stage blocked the action and why.</p>
-      <div class="log-list" id="log-list"></div>
     </section>
   </div>
 
   <script>
     let currentRules = [];
     let currentGoal = "";
+    const localLogKey = "fence-local-logs";
 
-    function formatStage(stage) {
-      return (stage || "unknown").replaceAll("_", " ");
+    function getLocalLogs() {
+      try {
+        const stored = localStorage.getItem(localLogKey);
+        return stored ? JSON.parse(stored) : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveLocalLog(entry) {
+      const logs = getLocalLogs();
+      logs.push(entry);
+      localStorage.setItem(localLogKey, JSON.stringify(logs.slice(-20)));
     }
 
     function setQuickAction(value) {
@@ -651,6 +463,24 @@
     function clearAction() {
       document.getElementById("action-input").value = "";
       document.getElementById("result-box").style.display = "none";
+    }
+
+    function formatStage(stage) {
+      return (stage || "unknown").replaceAll("_", " ");
+    }
+
+    function updateWhyPanel(data) {
+      const title = document.getElementById("why-title");
+      const text = document.getElementById("why-text");
+
+      if (!data) {
+        title.textContent = "No action reviewed yet";
+        text.textContent = "When you test an action, Fence will explain in simple language why it allowed or blocked it and what would be more suitable.";
+        return;
+      }
+
+      title.textContent = data.allowed ? "Why this was allowed" : "Why this was blocked";
+      text.textContent = data.explanation || data.reason || "No explanation available.";
     }
 
     async function loadConfig() {
@@ -663,7 +493,7 @@
         document.getElementById("goal-input").value = currentGoal;
         renderRules();
       } catch (e) {
-        document.getElementById("goal-display").textContent = "Could not load the portfolio goal.";
+        document.getElementById("goal-display").textContent = "Could not load the goal.";
       }
     }
 
@@ -671,8 +501,8 @@
       try {
         const res = await fetch("/sebi");
         const data = await res.json();
-        const list = document.getElementById("sebi-list");
         const regulations = data.regulations || [];
+        const list = document.getElementById("sebi-list");
 
         if (!regulations.length) {
           list.innerHTML = '<div class="empty-state">No SEBI regulations available.</div>';
@@ -680,16 +510,16 @@
         }
 
         list.innerHTML = regulations.map((reg) => `
-          <article class="regulation-card">
+          <div class="regulation-card">
             <span class="regulation-focus">${reg.focus}</span>
             <h3>${reg.title}</h3>
             <p>${reg.summary}</p>
             <p><strong>Fence check:</strong> ${reg.check}</p>
-            <a class="regulation-link" href="${reg.source}" target="_blank" rel="noreferrer">Open official SEBI source</a>
-          </article>
+            <a class="regulation-link" href="${reg.source}" target="_blank" rel="noreferrer">Open source</a>
+          </div>
         `).join("");
       } catch (e) {
-        document.getElementById("sebi-list").innerHTML = '<div class="empty-state">SEBI regulations could not be loaded.</div>';
+        document.getElementById("sebi-list").innerHTML = '<div class="empty-state">Could not load SEBI regulations.</div>';
       }
     }
 
@@ -702,8 +532,7 @@
 
       list.innerHTML = currentRules.map((rule, index) => `
         <div class="rule-item">
-          <span class="icon-badge">R</span>
-          <span>${rule}</span>
+          <div class="rule-text">${rule}</div>
           <button class="mini-btn" onclick="deleteRule(${index})">Remove</button>
         </div>
       `).join("");
@@ -724,7 +553,6 @@
 
       currentGoal = goal;
       document.getElementById("goal-display").textContent = goal;
-      alert("Goal saved.");
     }
 
     async function addRule() {
@@ -756,6 +584,21 @@
       renderRules();
     }
 
+    function renderResult(data) {
+      const box = document.getElementById("result-box");
+      const decision = document.getElementById("result-decision");
+      const allowed = !!data.allowed;
+
+      box.className = "result-box " + (allowed ? "allowed" : "blocked");
+      document.getElementById("result-action").textContent = data.action || "";
+      decision.textContent = allowed ? "Allowed" : "Blocked";
+      decision.className = allowed ? "decision-allowed" : "decision-blocked";
+      document.getElementById("result-reason").textContent = data.reason || "No reason available.";
+      document.getElementById("result-warning").textContent = data.warning ? "Warning: " + data.warning : "";
+      document.getElementById("result-suggestion").textContent = data.suggestion ? "Suitable action: " + data.suggestion : "";
+      box.style.display = "block";
+    }
+
     async function runAction() {
       const action = document.getElementById("action-input").value.trim();
       if (!action) {
@@ -764,7 +607,6 @@
       }
 
       document.getElementById("loading").style.display = "block";
-      document.getElementById("result-box").style.display = "none";
 
       try {
         const res = await fetch("/run", {
@@ -772,55 +614,78 @@
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ text: action })
         });
+
+        if (!res.ok) {
+          throw new Error("Review request failed.");
+        }
+
         const data = await res.json();
-
-        const resultBox = document.getElementById("result-box");
-        const resultStatus = document.getElementById("result-status");
-        const resultDetail = document.getElementById("result-detail");
-        const resultStage = document.getElementById("result-stage");
-        const resultRule = document.getElementById("result-rule");
-        const allowed = !!data.allowed;
-
-        resultBox.className = "result-box " + (allowed ? "allowed" : "blocked");
-        resultStatus.className = "result-status " + (allowed ? "allowed" : "blocked");
-        resultStatus.textContent = allowed ? "Allowed" : "Error: blocked by Fence";
-        resultDetail.textContent = data.reason || "No explanation available.";
-        resultStage.textContent = "Stage: " + formatStage(data.stage);
-        resultRule.textContent = data.rule ? "Matched: " + data.rule : "Matched: general safety check";
-        resultBox.style.display = "block";
-
-        loadLogs();
+        renderResult(data);
+        updateWhyPanel(data);
+        saveLocalLog(data);
+        await loadLogs();
       } catch (e) {
-        alert("Something went wrong. Check the server.");
+        const fallback = {
+          action,
+          allowed: false,
+          reason: "The review could not be completed by the server.",
+          warning: "Please check that the app backend is running correctly.",
+          suggestion: "Try a simpler action such as a gradual investment in a diversified large-cap stock.",
+          explanation: "The UI did not receive a valid response from the backend, so the action could not be reviewed."
+        };
+        renderResult(fallback);
+        updateWhyPanel(fallback);
+        saveLocalLog({ ...fallback, timestamp: new Date().toISOString(), stage: "client_error" });
+        await loadLogs();
       } finally {
         document.getElementById("loading").style.display = "none";
       }
     }
 
     async function loadLogs() {
+      let logs = [];
+
       try {
         const res = await fetch("/logs");
-        const logs = await res.json();
-        const list = document.getElementById("log-list");
-
-        if (!logs.length) {
-          list.innerHTML = '<div class="empty-state">No actions tested yet.</div>';
-          return;
+        if (res.ok) {
+          logs = await res.json();
         }
+      } catch (e) {}
 
-        list.innerHTML = [...logs].reverse().map((log) => `
-          <div class="log-entry ${log.allowed ? "allowed" : "blocked"}">
-            <div class="log-topline">
-              <span class="badge ${log.allowed ? "allowed" : "blocked"}">${log.allowed ? "allowed" : "blocked"}</span>
-              <span class="log-action">${log.action}</span>
-            </div>
-            <div class="log-reason">${log.reason}</div>
-            <div class="log-meta">${formatStage(log.stage)} | ${new Date(log.timestamp).toLocaleString()}</div>
-          </div>
-        `).join("");
-      } catch (e) {
-        document.getElementById("log-list").innerHTML = '<div class="empty-state">Action log could not be loaded.</div>';
+      const combined = [...logs, ...getLocalLogs()];
+      const deduped = [];
+      const seen = new Set();
+
+      combined.forEach((log) => {
+        const key = `${log.timestamp || ""}|${log.action || ""}|${log.reason || ""}`;
+        if (!seen.has(key)) {
+          seen.add(key);
+          deduped.push(log);
+        }
+      });
+
+      const ordered = deduped
+        .sort((a, b) => new Date(b.timestamp || 0) - new Date(a.timestamp || 0))
+        .slice(0, 20);
+
+      const list = document.getElementById("log-list");
+      if (!ordered.length) {
+        list.innerHTML = '<div class="empty-state">No actions tested yet.</div>';
+        return;
       }
+
+      list.innerHTML = ordered.map((log) => `
+        <div class="log-entry ${log.allowed ? "allowed" : "blocked"}">
+          <div class="log-top">
+            <span class="badge ${log.allowed ? "allowed" : "blocked"}">${log.allowed ? "allowed" : "blocked"}</span>
+            <span class="log-action">${log.action || "Unknown action"}</span>
+          </div>
+          <div class="log-reason">${log.reason || "No reason available."}</div>
+          ${log.warning ? `<div class="log-extra">Warning: ${log.warning}</div>` : ""}
+          ${log.suggestion ? `<div class="log-extra">Suitable action: ${log.suggestion}</div>` : ""}
+          <div class="log-meta">${formatStage(log.stage)} | ${log.timestamp ? new Date(log.timestamp).toLocaleString() : "No time"}</div>
+        </div>
+      `).join("");
     }
 
     loadConfig();
