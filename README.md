@@ -15,7 +15,7 @@ Fence is a real-time enforcement layer that validates every AI-generated action 
 User → Agent → FENCE → Execute
 
 How Fence Works
-* User Input → “invest aggressively”
+* User Input 
 * AI Agent Decision → generates action
 * Fence Check → validates against:
     * Risk limits
