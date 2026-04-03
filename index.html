@@ -65,32 +65,58 @@
       padding: 32px;
     }
 
-    .auth-brand {
+    .auth-brand,
+    .brand-wrap {
       display: flex;
       align-items: center;
       gap: 14px;
+    }
+
+    .auth-brand {
       margin-bottom: 18px;
     }
 
-    .logo-mark {
-      width: 54px;
-      height: 54px;
+    .logo-mark,
+    .header-logo {
+      width: 56px;
+      height: 56px;
       border-radius: 16px;
       object-fit: cover;
       border: 1px solid rgba(255, 255, 255, 0.14);
       background: rgba(255, 255, 255, 0.04);
     }
 
-    .auth-title {
+    .header-logo {
+      width: 96px;
+      height: 96px;
+      border-radius: 24px;
+    }
+
+    .auth-title,
+    .brand {
       font-size: 2rem;
       font-weight: 800;
       letter-spacing: -0.04em;
     }
 
-    .auth-copy {
+    .auth-copy,
+    .header-copy,
+    .subtext,
+    .why-box p,
+    .regulation-card p,
+    .log-reason,
+    .log-extra,
+    .empty-state {
       color: var(--muted);
-      line-height: 1.7;
+      line-height: 1.65;
+    }
+
+    .auth-copy {
       margin-bottom: 18px;
+    }
+
+    .field-group {
+      margin-bottom: 14px;
     }
 
     .field-label {
@@ -101,12 +127,8 @@
       font-weight: 700;
     }
 
-    .field-group {
-      margin-bottom: 14px;
-    }
-
-    textarea,
     input,
+    textarea,
     select {
       width: 100%;
       border-radius: 16px;
@@ -118,8 +140,8 @@
       outline: none;
     }
 
-    textarea:focus,
     input:focus,
+    textarea:focus,
     select:focus {
       border-color: var(--pink);
     }
@@ -169,31 +191,18 @@
     .header-top {
       display: flex;
       justify-content: space-between;
-      gap: 16px;
       align-items: center;
+      gap: 16px;
       flex-wrap: wrap;
       margin-bottom: 14px;
     }
 
-    .brand-wrap {
+    .header-right {
       display: flex;
       align-items: center;
-      gap: 14px;
-    }
-
-    .header-logo {
-      width: 56px;
-      height: 56px;
-      border-radius: 16px;
-      object-fit: cover;
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      background: rgba(255, 255, 255, 0.04);
-    }
-
-    .brand {
-      font-size: 2.2rem;
-      font-weight: 800;
-      letter-spacing: -0.04em;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
     }
 
     .status {
@@ -202,10 +211,14 @@
       font-weight: 700;
     }
 
-    .header-copy {
-      color: var(--muted);
-      line-height: 1.7;
-      max-width: 760px;
+    .user-pill {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 0.92rem;
+      font-weight: 700;
     }
 
     .layout {
@@ -232,8 +245,6 @@
     }
 
     .subtext {
-      color: var(--soft);
-      line-height: 1.6;
       font-size: 0.95rem;
       margin-bottom: 16px;
     }
@@ -251,60 +262,10 @@
 
     .goal-display,
     .why-box,
-    .result-box,
+    .regulation-card,
     .log-entry,
-    .regulation-card {
-      padding: 16px;
-    }
-
-    .loading {
-      display: none;
-      color: var(--muted);
-      margin-top: 12px;
-    }
-
     .result-box {
-      display: none;
-      margin-top: 16px;
-    }
-
-    .result-box.allowed {
-      border-color: rgba(110, 231, 168, 0.26);
-    }
-
-    .result-box.blocked {
-      border-color: rgba(255, 116, 143, 0.26);
-    }
-
-    .result-list {
-      list-style: disc;
-      padding-left: 24px;
-      display: grid;
-      gap: 14px;
-      color: var(--text);
-      line-height: 1.6;
-    }
-
-    .result-label {
-      color: var(--muted);
-      font-weight: 700;
-      margin-right: 8px;
-    }
-
-    .decision-blocked {
-      color: var(--red);
-      font-weight: 800;
-    }
-
-    .decision-allowed {
-      color: var(--green);
-      font-weight: 800;
-    }
-
-    .warning-line {
-      margin-top: 14px;
-      color: var(--amber);
-      line-height: 1.6;
+      padding: 16px;
     }
 
     .rule-list,
@@ -332,26 +293,138 @@
       color: var(--red);
     }
 
+    .loading {
+      display: none;
+      color: var(--muted);
+      margin-top: 12px;
+    }
+
+    .popup-overlay {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(5, 2, 8, 0.76);
+      backdrop-filter: blur(6px);
+      z-index: 9999;
+    }
+
+    .popup-overlay.show {
+      display: flex;
+    }
+
+    .popup-card {
+      width: min(100%, 540px);
+      background: rgba(24, 8, 18, 0.98);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 28px;
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.55);
+      padding: 28px;
+    }
+
+    .popup-card.allowed {
+      border-color: rgba(110, 231, 168, 0.34);
+    }
+
+    .popup-card.blocked {
+      border-color: rgba(255, 116, 143, 0.34);
+    }
+
+    .popup-icon {
+      font-size: 64px;
+      line-height: 1;
+      margin-bottom: 14px;
+    }
+
+    .popup-title {
+      font-size: 2.3rem;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      margin-bottom: 12px;
+    }
+
+    .popup-title.allowed {
+      color: var(--green);
+    }
+
+    .popup-title.blocked {
+      color: var(--red);
+    }
+
+    .popup-line {
+      color: var(--text);
+      line-height: 1.7;
+      margin-bottom: 10px;
+    }
+
+    .popup-warning {
+      color: var(--amber);
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    .popup-suggestion {
+      color: var(--green);
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+
+    .result-box {
+      display: none;
+      margin-top: 16px;
+      border: 1px solid transparent;
+    }
+
+    .result-box.allowed {
+      border-color: rgba(110, 231, 168, 0.26);
+    }
+
+    .result-box.blocked {
+      border-color: rgba(255, 116, 143, 0.26);
+    }
+
+    .result-list {
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    .result-label {
+      color: var(--muted);
+      font-weight: 700;
+      margin-right: 8px;
+    }
+
+    .decision-allowed {
+      color: var(--green);
+      font-weight: 800;
+    }
+
+    .decision-blocked {
+      color: var(--red);
+      font-weight: 800;
+    }
+
+    .warning-line {
+      margin-top: 10px;
+      color: var(--amber);
+      line-height: 1.6;
+      font-size: 0.93rem;
+    }
+
+    .suggestion-line {
+      margin-top: 6px;
+      color: var(--green);
+      line-height: 1.6;
+      font-size: 0.93rem;
+    }
+
+    .why-box h3,
     .regulation-card h3 {
       margin-bottom: 8px;
       font-size: 1rem;
-    }
-
-    .regulation-card p {
-      color: var(--muted);
-      line-height: 1.6;
-      margin-bottom: 8px;
-      font-size: 0.94rem;
-    }
-
-    .why-box h3 {
-      margin-bottom: 10px;
-      font-size: 1rem;
-    }
-
-    .why-box p {
-      color: var(--muted);
-      line-height: 1.65;
     }
 
     .log-entry.allowed {
@@ -391,14 +464,6 @@
       font-weight: 700;
     }
 
-    .log-reason,
-    .log-extra,
-    .empty-state {
-      color: var(--muted);
-      line-height: 1.6;
-      font-size: 0.94rem;
-    }
-
     .log-meta {
       color: var(--soft);
       font-size: 12px;
@@ -423,9 +488,7 @@
         <img class="logo-mark" src="/logo.jpeg" alt="Fence logo" />
         <div class="auth-title">Fence Login</div>
       </div>
-      <p class="auth-copy">
-        Sign in to review actions and connect to a stock site from one place.
-      </p>
+      <p class="auth-copy">Log in with saved details or sign up once and use the same details next time.</p>
 
       <div class="field-group">
         <label class="field-label" for="login-username">Username</label>
@@ -448,13 +511,12 @@
       </div>
 
       <div class="button-row">
-        <button class="primary-btn" onclick="loginAndConnect()">Login</button>
+        <button class="primary-btn" onclick="loginToFence()">Login To Fence</button>
+        <button class="secondary-btn" onclick="signUp()">Sign Up</button>
         <button class="secondary-btn" onclick="connectSelectedSite()">Connect To Stock Site</button>
       </div>
 
-      <p class="auth-note" id="auth-note">
-        Enter any username and password to continue in this local demo.
-      </p>
+      <p class="auth-note" id="auth-note">Sign up once to save your details for future login.</p>
     </section>
   </div>
 
@@ -463,13 +525,14 @@
       <div class="header-top">
         <div class="brand-wrap">
           <img class="header-logo" src="/logo.jpeg" alt="Fence logo" />
-          <div class="brand">Fence</div>
         </div>
-        <div class="status">Live review</div>
+        <div class="header-right">
+          <div class="user-pill" id="header-user">User</div>
+          <button class="secondary-btn" onclick="logout()">Logout</button>
+          <div class="status">Live review</div>
+        </div>
       </div>
-      <p class="header-copy">
-        Review an investing action against your portfolio goal, your own rules, and a few basic SEBI regulations before moving ahead.
-      </p>
+      <p class="header-copy">Review an investing action against your portfolio goal, your own rules, and the 10 SEBI regulation points shown on the page.</p>
     </section>
 
     <section class="layout">
@@ -505,7 +568,7 @@
               <li><span class="result-label">Reason:</span><span id="result-reason"></span></li>
             </ul>
             <div class="warning-line" id="result-warning"></div>
-            <div class="warning-line" id="result-suggestion"></div>
+            <div class="suggestion-line" id="result-suggestion"></div>
           </div>
         </div>
 
@@ -521,7 +584,7 @@
 
         <div class="card">
           <h2>Live Action Log</h2>
-          <p class="subtext">Recent reviews are shown here, with a fallback local history to keep the log visible.</p>
+          <p class="subtext">Recent reviews are shown here, with a local fallback history so the log keeps working.</p>
           <div class="log-list" id="log-list"></div>
         </div>
       </div>
@@ -544,11 +607,30 @@
     </section>
   </div>
 
+  <div class="popup-overlay" id="result-popup">
+    <div class="popup-card" id="popup-card">
+      <div class="popup-icon" id="popup-icon"></div>
+      <div class="popup-title" id="popup-title"></div>
+      <div class="popup-line"><strong>Action:</strong> <span id="popup-action"></span></div>
+      <div class="popup-line"><strong>Reason:</strong> <span id="popup-reason"></span></div>
+      <div class="popup-warning" id="popup-warning"></div>
+      <div class="popup-suggestion" id="popup-suggestion"></div>
+      <div class="button-row">
+        <button class="primary-btn" onclick="closePopup()">Close</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     let currentRules = [];
     let currentGoal = "";
+
     const localLogKey = "fence-local-logs";
     const loginStateKey = "fence-authenticated";
+    const loginUserKey = "fence-username";
+    const loginPassKey = "fence-password";
+    const accountsKey = "fence-accounts";
+
     const defaultSebiRegulations = [
       { title: "1. KYC Compliance", summary: "KYC compliance requires every investor to verify identity before trading." },
       { title: "2. Insider Trading Prohibition", summary: "Insider trading is strictly prohibited using non-public information." },
@@ -561,6 +643,19 @@
       { title: "9. Audit Trail Requirement", summary: "All transactions must be recorded and auditable." },
       { title: "10. Investor Protection Rules", summary: "Investor protection rules ensure grievance redressal and fund safety." }
     ];
+
+    function getAccounts() {
+      try {
+        const stored = localStorage.getItem(accountsKey);
+        return stored ? JSON.parse(stored) : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveAccounts(accounts) {
+      localStorage.setItem(accountsKey, JSON.stringify(accounts));
+    }
 
     function getLocalLogs() {
       try {
@@ -577,9 +672,22 @@
       localStorage.setItem(localLogKey, JSON.stringify(logs.slice(-20)));
     }
 
+    function updateHeaderUser() {
+      const username = localStorage.getItem(loginUserKey) || "User";
+      document.getElementById("header-user").textContent = username;
+    }
+
+    function saveLoginDetails(username, password) {
+      localStorage.setItem(loginUserKey, username);
+      localStorage.setItem(loginPassKey, password);
+      localStorage.setItem(loginStateKey, "true");
+      updateHeaderUser();
+    }
+
     function showApp() {
       document.getElementById("auth-shell").classList.add("hidden");
       document.getElementById("app-shell").classList.remove("hidden");
+      updateHeaderUser();
     }
 
     function showLogin() {
@@ -587,12 +695,22 @@
       document.getElementById("app-shell").classList.add("hidden");
     }
 
+    function logout() {
+      localStorage.removeItem(loginStateKey);
+      localStorage.removeItem(loginUserKey);
+      localStorage.removeItem(loginPassKey);
+      document.getElementById("login-password").value = "";
+      document.getElementById("auth-note").textContent = "Logged out successfully.";
+      document.getElementById("auth-note").style.color = "#6ee7a8";
+      showLogin();
+    }
+
     function connectSelectedSite() {
       const site = document.getElementById("stock-site").value;
       window.open(site, "_blank", "noopener,noreferrer");
     }
 
-    function loginAndConnect() {
+    function loginToFence() {
       const username = document.getElementById("login-username").value.trim();
       const password = document.getElementById("login-password").value.trim();
       const note = document.getElementById("auth-note");
@@ -603,11 +721,45 @@
         return;
       }
 
-      localStorage.setItem(loginStateKey, "true");
-      note.textContent = "Login successful. Opening your selected stock site.";
+      const accounts = getAccounts();
+      const matched = accounts.find((account) => account.username === username && account.password === password);
+      if (!matched) {
+        note.textContent = "No saved account found. Please sign up first or check your details.";
+        note.style.color = "#ff748f";
+        return;
+      }
+
+      saveLoginDetails(username, password);
+      note.textContent = "Login successful.";
       note.style.color = "#6ee7a8";
       showApp();
-      connectSelectedSite();
+    }
+
+    function signUp() {
+      const username = document.getElementById("login-username").value.trim();
+      const password = document.getElementById("login-password").value.trim();
+      const note = document.getElementById("auth-note");
+
+      if (!username || !password) {
+        note.textContent = "Please enter both username and password.";
+        note.style.color = "#ff748f";
+        return;
+      }
+
+      const accounts = getAccounts();
+      const exists = accounts.some((account) => account.username === username);
+      if (exists) {
+        note.textContent = "This username already exists. Please log in instead.";
+        note.style.color = "#ff748f";
+        return;
+      }
+
+      accounts.push({ username, password });
+      saveAccounts(accounts);
+      saveLoginDetails(username, password);
+      note.textContent = "Sign up successful. Your details are saved for future login.";
+      note.style.color = "#6ee7a8";
+      showApp();
     }
 
     function setQuickAction(value) {
@@ -635,6 +787,27 @@
 
       title.textContent = data.allowed ? "Why this was allowed" : "Why this was blocked";
       text.textContent = data.explanation || data.reason || "No explanation available.";
+    }
+
+    function showPopup(data) {
+      const allowed = !!data.allowed;
+      const overlay = document.getElementById("result-popup");
+      const card = document.getElementById("popup-card");
+      const title = document.getElementById("popup-title");
+
+      card.className = "popup-card " + (allowed ? "allowed" : "blocked");
+      document.getElementById("popup-icon").textContent = allowed ? "✓" : "✕";
+      title.textContent = allowed ? "Allowed" : "Blocked";
+      title.className = "popup-title " + (allowed ? "allowed" : "blocked");
+      document.getElementById("popup-action").textContent = data.action || "";
+      document.getElementById("popup-reason").textContent = data.reason || "No reason available.";
+      document.getElementById("popup-warning").textContent = data.warning ? "Warning: " + data.warning : "";
+      document.getElementById("popup-suggestion").textContent = data.suggestion ? "Suitable action: " + data.suggestion : "";
+      overlay.classList.add("show");
+    }
+
+    function closePopup() {
+      document.getElementById("result-popup").classList.remove("show");
     }
 
     async function loadConfig() {
@@ -729,12 +902,13 @@
 
       box.className = "result-box " + (allowed ? "allowed" : "blocked");
       document.getElementById("result-action").textContent = data.action || "";
+      document.getElementById("result-reason").textContent = data.reason || "No reason available.";
       decision.textContent = allowed ? "Allowed" : "Blocked";
       decision.className = allowed ? "decision-allowed" : "decision-blocked";
-      document.getElementById("result-reason").textContent = data.reason || "No reason available.";
       document.getElementById("result-warning").textContent = data.warning ? "Warning: " + data.warning : "";
       document.getElementById("result-suggestion").textContent = data.suggestion ? "Suitable action: " + data.suggestion : "";
       box.style.display = "block";
+      showPopup(data);
     }
 
     async function runAction() {
@@ -760,7 +934,7 @@
         const data = await res.json();
         renderResult(data);
         updateWhyPanel(data);
-        saveLocalLog(data);
+        saveLocalLog({ ...data, timestamp: data.timestamp || new Date().toISOString() });
         await loadLogs();
       } catch (e) {
         const fallback = {
@@ -769,11 +943,13 @@
           reason: "The review could not be completed by the server.",
           warning: "Please check that the app backend is running correctly.",
           suggestion: "Try a simpler action such as a gradual investment in a diversified large-cap stock.",
-          explanation: "The UI did not receive a valid response from the backend, so the action could not be reviewed."
+          explanation: "The UI did not receive a valid response from the backend.",
+          stage: "client_error",
+          timestamp: new Date().toISOString()
         };
         renderResult(fallback);
         updateWhyPanel(fallback);
-        saveLocalLog({ ...fallback, timestamp: new Date().toISOString(), stage: "client_error" });
+        saveLocalLog(fallback);
         await loadLogs();
       } finally {
         document.getElementById("loading").style.display = "none";
@@ -831,6 +1007,17 @@
       loadConfig();
       loadLogs();
       setInterval(loadLogs, 5000);
+
+      const rememberedUser = localStorage.getItem(loginUserKey);
+      const rememberedPass = localStorage.getItem(loginPassKey);
+
+      if (rememberedUser) {
+        document.getElementById("login-username").value = rememberedUser;
+      }
+
+      if (rememberedPass) {
+        document.getElementById("login-password").value = rememberedPass;
+      }
 
       if (localStorage.getItem(loginStateKey) === "true") {
         showApp();
