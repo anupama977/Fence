@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fence — AI Agent Orchestration Layer</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #0f0f0f;
+      color: #f0f0f0;
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 24px 40px;
+      border-bottom: 1px solid #222;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    header h1 {
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+    }
+
+    header span {
+      font-size: 13px;
+      color: #666;
+      background: #1a1a1a;
+      padding: 4px 10px;
+      border-radius: 20px;
+      border: 1px solid #2a2a2a;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .card {
+      background: #161616;
+      border: 1px solid #222;
+      border-radius: 12px;
+      padding: 24px;
+    }
+
+    .card h2 {
+      font-size: 14px;
+      font-weight: 500;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 20px;
+    }
+
+    .full-width {
+      grid-column: 1 / -1;
+    }
+
+    textarea, input[type="text"] {
+      width: 100%;
+      background: #0f0f0f;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      padding: 12px;
+      color: #f0f0f0;
+      font-size: 14px;
+      font-family: inherit;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    textarea:focus, input[type="text"]:focus {
+      border-color: #444;
+    }
+
+    button {
+      background: #f0f0f0;
+      color: #0f0f0f;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      margin-top: 12px;
+    }
+
+    button:hover { opacity: 0.85; }
+
+    button.secondary {
+      background: #1a1a1a;
+      color: #f0f0f0;
+      border: 1px solid #2a2a2a;
+    }
+
+    .rule-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      background: #0f0f0f;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .rule-item button {
+      margin: 0;
+      padding: 4px 10px;
+      font-size: 12px;
+      background: #1a1a1a;
+      color: #ff4444;
+      border: 1px solid #2a2a2a;
+      border-radius: 6px;
+      margin-left: auto;
+    }
+
+    .result-box {
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 16px;
+      display: none;
+    }
+
+    .result-box.allowed {
+      background: #0d1f0d;
+      border: 1px solid #1a4a1a;
+    }
+
+    .result-box.blocked {
+      background: #1f0d0d;
+      border: 1px solid #4a1a1a;
+    }
+
+    .result-status {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .result-status.allowed { color: #4caf50; }
+    .result-status.blocked { color: #f44336; }
+
+    .result-detail {
+      font-size: 13px;
+      color: #aaa;
+      line-height: 1.6;
+    }
+
+    .result-stage {
+      display: inline-block;
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 20px;
+      margin-top: 8px;
+      background: #222;
+      color: #888;
+    }
+
+    .log-entry {
+      padding: 14px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #222;
+      background: #0f0f0f;
+    }
+
+    .log-entry.allowed { border-left: 3px solid #4caf50; }
+    .log-entry.blocked { border-left: 3px solid #f44336; }
+
+    .log-action {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .log-reason {
+      font-size: 12px;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    .log-meta {
+      font-size: 11px;
+      color: #444;
+      margin-top: 6px;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 20px;
+      margin-right: 6px;
+    }
+
+    .badge.allowed { background: #0d2b0d; color: #4caf50; }
+    .badge.blocked { background: #2b0d0d; color: #f44336; }
+
+    .loading {
+      color: #666;
+      font-size: 14px;
+      margin-top: 12px;
+      display: none;
+    }
+
+    .goal-display {
+      font-size: 14px;
+      color: #aaa;
+      line-height: 1.6;
+      padding: 12px;
+      background: #0f0f0f;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+
+    .empty-logs {
+      color: #444;
+      font-size: 14px;
+      text-align: center;
+      padding: 40px 0;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Fence</h1>
+  <span>AI Orchestration Layer</span>
+  <span style="margin-left: auto; color: #4caf50;">● live</span>
+</header>
+
+<div class="container">
+
+  <!-- Goal Setting -->
+  <div class="card">
+    <h2>User Goal</h2>
+    <div class="goal-display" id="goal-display">Loading...</div>
+    <textarea id="goal-input" rows="3" placeholder="Describe your investment goal..."></textarea>
+    <button onclick="saveGoal()">Save Goal</button>
+  </div>
+
+  <!-- Test Action -->
+  <div class="card">
+    <h2>Test an Action</h2>
+    <input type="text" id="action-input" placeholder='e.g. "put everything in bitcoin"' />
+    <button onclick="runAction()">Run Through Fence</button>
+    <div class="loading" id="loading">Fence is thinking...</div>
+    <div class="result-box" id="result-box">
+      <div class="result-status" id="result-status"></div>
+      <div class="result-detail" id="result-detail"></div>
+      <span class="result-stage" id="result-stage"></span>
+    </div>
+  </div>
+
+  <!-- Rules Manager -->
+  <div class="card">
+    <h2>Your Rules</h2>
+    <div id="rules-list"></div>
+    <input type="text" id="new-rule" placeholder="Add a new rule in plain English..." />
+    <button onclick="addRule()">Add Rule</button>
+  </div>
+
+  <!-- SEBI Regulations -->
+  <div class="card">
+    <h2>SEBI Regulations</h2>
+    <div id="sebi-list"></div>
+  </div>
+
+  <!-- Live Log -->
+  <div class="card full-width">
+    <h2>Live Action Log</h2>
+    <div id="log-list"></div>
+  </div>
+
+</div>
+
+<script>
+  let currentRules = [];
+  let currentGoal = "";
+
+  async function loadConfig() {
+    try {
+      const res = await fetch("/config");
+      const data = await res.json();
+      currentGoal = data.goal;
+      currentRules = data.rules;
+      document.getElementById("goal-display").textContent = data.goal;
+      document.getElementById("goal-input").value = data.goal;
+      renderRules();
+    } catch (e) {
+      document.getElementById("goal-display").textContent = "Could not load goal.";
+    }
+  }
+
+  async function loadSebi() {
+    try {
+      const res = await fetch("/sebi");
+      const data = await res.json();
+      const list = document.getElementById("sebi-list");
+      list.innerHTML = data.regulations.map(r => `
+        <div class="rule-item">${r}</div>
+      `).join("");
+    } catch (e) {}
+  }
+
+  function renderRules() {
+    const list = document.getElementById("rules-list");
+    if (currentRules.length === 0) {
+      list.innerHTML = `<div class="empty-logs">No rules set yet</div>`;
+      return;
+    }
+    list.innerHTML = currentRules.map((r, i) => `
+      <div class="rule-item">
+        ${r}
+        <button onclick="deleteRule(${i})">remove</button>
+      </div>
+    `).join("");
+  }
+
+  async function saveGoal() {
+    const goal = document.getElementById("goal-input").value.trim();
+    if (!goal) return;
+    await fetch("/update-config", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ goal: goal, rules: currentRules })
+    });
+    currentGoal = goal;
+    document.getElementById("goal-display").textContent = goal;
+    alert("Goal saved!");
+  }
+
+  async function addRule() {
+    const input = document.getElementById("new-rule");
+    const rule = input.value.trim();
+    if (!rule) return;
+    currentRules.push(rule);
+    await fetch("/update-config", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ goal: currentGoal, rules: currentRules })
+    });
+    input.value = "";
+    renderRules();
+  }
+
+  async function deleteRule(index) {
+    currentRules.splice(index, 1);
+    await fetch("/update-config", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ goal: currentGoal, rules: currentRules })
+    });
+    renderRules();
+  }
+
+  async function runAction() {
+    const action = document.getElementById("action-input").value.trim();
+    if (!action) return;
+
+    document.getElementById("loading").style.display = "block";
+    document.getElementById("result-box").style.display = "none";
+
+    try {
+      const res = await fetch("/run", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: action })
+      });
+      const data = await res.json();
+
+      const box = document.getElementById("result-box");
+      const status = document.getElementById("result-status");
+      const detail = document.getElementById("result-detail");
+      const stage = document.getElementById("result-stage");
+
+      box.className = "result-box " + (data.allowed ? "allowed" : "blocked");
+      status.className = "result-status " + (data.allowed ? "allowed" : "blocked");
+      status.textContent = data.allowed ? "✓ Allowed" : "✗ Blocked";
+      detail.textContent = data.reason;
+      stage.textContent = "stage: " + data.stage.replace("_", " ");
+      box.style.display = "block";
+
+      loadLogs();
+    } catch (e) {
+      alert("Something went wrong. Check your terminal.");
+    }
+
+    document.getElementById("loading").style.display = "none";
+  }
+
+  async function loadLogs() {
+    try {
+      const res = await fetch("/logs");
+      const logs = await res.json();
+      const list = document.getElementById("log-list");
+
+      if (logs.length === 0) {
+        list.innerHTML = `<div class="empty-logs">No actions tested yet</div>`;
+        return;
+      }
+
+      list.innerHTML = [...logs].reverse().map(log => `
+        <div class="log-entry ${log.allowed ? 'allowed' : 'blocked'}">
+          <div class="log-action">
+            <span class="badge ${log.allowed ? 'allowed' : 'blocked'}">${log.allowed ? 'allowed' : 'blocked'}</span>
+            ${log.action}
+          </div>
+          <div class="log-reason">${log.reason}</div>
+          <div class="log-meta">${log.stage.replace("_", " ")} · ${new Date(log.timestamp).toLocaleTimeString()}</div>
+        </div>
+      `).join("");
+    } catch (e) {}
+  }
+
+  loadConfig();
+  loadSebi();
+  loadLogs();
+  setInterval(loadLogs, 5000);
+</script>
+
+</body>
+</html>
