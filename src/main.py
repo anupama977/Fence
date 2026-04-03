@@ -9,6 +9,7 @@ import uvicorn
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 INDEX_PATH = BASE_DIR / "index.html"
+LOGO_PATH = BASE_DIR / "logo.jpeg"
 
 if str(BASE_DIR) not in sys.path:
     sys.path.insert(0, str(BASE_DIR))
@@ -37,12 +38,31 @@ class ConfigUpdate(BaseModel):
 
 @app.get("/")
 def serve_ui():
-    return FileResponse(INDEX_PATH)
+    return FileResponse(
+        INDEX_PATH,
+        headers={
+            "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+            "Pragma": "no-cache",
+            "Expires": "0",
+        },
+    )
 
 
 @app.post("/run")
 async def run(input: UserInput):
     return await run_agent(input.text)
+
+
+@app.get("/logo.jpeg")
+def get_logo():
+    return FileResponse(
+        LOGO_PATH,
+        headers={
+            "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+            "Pragma": "no-cache",
+            "Expires": "0",
+        },
+    )
 
 
 @app.get("/logs")

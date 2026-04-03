@@ -6,15 +6,13 @@
   <title>Fence | Investment Safety Review</title>
   <style>
     :root {
-      --bg: #090308;
       --panel: rgba(21, 8, 18, 0.94);
-      --panel-soft: rgba(31, 12, 25, 0.9);
+      --panel-soft: rgba(31, 12, 25, 0.92);
       --border: rgba(255, 112, 170, 0.22);
       --text: #fff6fb;
       --muted: #d7b6c7;
       --soft: #a68093;
       --pink: #ff4f9f;
-      --pink-dark: #8b174d;
       --green: #6ee7a8;
       --red: #ff748f;
       --amber: #ffc75f;
@@ -32,21 +30,138 @@
       font-family: "Segoe UI", sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at top left, rgba(255, 79, 159, 0.16), transparent 28%),
+        radial-gradient(circle at top left, rgba(255, 79, 159, 0.18), transparent 28%),
         linear-gradient(145deg, #030103 0%, #12050e 45%, #050206 100%);
       padding: 24px;
     }
 
+    .hidden {
+      display: none !important;
+    }
+
+    .auth-shell,
     .app {
       max-width: 1180px;
       margin: 0 auto;
     }
 
-    .header {
+    .auth-shell {
+      min-height: calc(100vh - 48px);
+      display: grid;
+      place-items: center;
+    }
+
+    .auth-card,
+    .header,
+    .card {
       background: var(--panel);
       border: 1px solid var(--border);
       border-radius: 24px;
       box-shadow: var(--shadow);
+    }
+
+    .auth-card {
+      width: min(100%, 500px);
+      padding: 32px;
+    }
+
+    .auth-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .logo-mark {
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
+      object-fit: cover;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .auth-title {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    .auth-copy {
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 18px;
+    }
+
+    .field-label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      font-weight: 700;
+    }
+
+    .field-group {
+      margin-bottom: 14px;
+    }
+
+    textarea,
+    input,
+    select {
+      width: 100%;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      background: rgba(0, 0, 0, 0.24);
+      color: var(--text);
+      padding: 14px 15px;
+      font-size: 0.96rem;
+      outline: none;
+    }
+
+    textarea:focus,
+    input:focus,
+    select:focus {
+      border-color: var(--pink);
+    }
+
+    .button-row,
+    .chips {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    button {
+      border: none;
+      border-radius: 14px;
+      padding: 11px 16px;
+      font-size: 0.94rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .primary-btn {
+      background: linear-gradient(135deg, var(--pink), #ff2d89);
+      color: #18050d;
+    }
+
+    .secondary-btn,
+    .chip,
+    .mini-btn {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .auth-note {
+      margin-top: 14px;
+      color: var(--soft);
+      line-height: 1.6;
+      font-size: 0.92rem;
+    }
+
+    .header {
       padding: 28px;
       margin-bottom: 22px;
     }
@@ -58,6 +173,21 @@
       align-items: center;
       flex-wrap: wrap;
       margin-bottom: 14px;
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .header-logo {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      object-fit: cover;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.04);
     }
 
     .brand {
@@ -90,10 +220,6 @@
     }
 
     .card {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      box-shadow: var(--shadow);
       padding: 24px;
     }
 
@@ -129,53 +255,6 @@
     .log-entry,
     .regulation-card {
       padding: 16px;
-    }
-
-    textarea,
-    input[type="text"] {
-      width: 100%;
-      border-radius: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.09);
-      background: rgba(0, 0, 0, 0.24);
-      color: var(--text);
-      padding: 14px 15px;
-      font-size: 0.96rem;
-      outline: none;
-    }
-
-    textarea:focus,
-    input[type="text"]:focus {
-      border-color: var(--pink);
-    }
-
-    .button-row,
-    .chips {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 14px;
-    }
-
-    button {
-      border: none;
-      border-radius: 14px;
-      padding: 11px 16px;
-      font-size: 0.94rem;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .primary-btn {
-      background: linear-gradient(135deg, var(--pink), #ff2d89);
-      color: #18050d;
-    }
-
-    .secondary-btn,
-    .chip,
-    .mini-btn {
-      background: rgba(255, 255, 255, 0.06);
-      color: var(--text);
-      border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .loading {
@@ -253,15 +332,6 @@
       color: var(--red);
     }
 
-    .regulation-focus {
-      color: var(--pink);
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      margin-bottom: 8px;
-      display: inline-block;
-    }
-
     .regulation-card h3 {
       margin-bottom: 8px;
       font-size: 1rem;
@@ -272,12 +342,6 @@
       line-height: 1.6;
       margin-bottom: 8px;
       font-size: 0.94rem;
-    }
-
-    .regulation-link {
-      color: #ff9dca;
-      text-decoration: none;
-      font-weight: 700;
     }
 
     .why-box h3 {
@@ -353,10 +417,54 @@
   </style>
 </head>
 <body>
-  <div class="app">
+  <div class="auth-shell" id="auth-shell">
+    <section class="auth-card">
+      <div class="auth-brand">
+        <img class="logo-mark" src="/logo.jpeg" alt="Fence logo" />
+        <div class="auth-title">Fence Login</div>
+      </div>
+      <p class="auth-copy">
+        Sign in to review actions and connect to a stock site from one place.
+      </p>
+
+      <div class="field-group">
+        <label class="field-label" for="login-username">Username</label>
+        <input id="login-username" type="text" placeholder="Enter username" />
+      </div>
+
+      <div class="field-group">
+        <label class="field-label" for="login-password">Password</label>
+        <input id="login-password" type="password" placeholder="Enter password" />
+      </div>
+
+      <div class="field-group">
+        <label class="field-label" for="stock-site">Connect To Stock Site</label>
+        <select id="stock-site">
+          <option value="https://www.nseindia.com/">NSE India</option>
+          <option value="https://www.bseindia.com/">BSE India</option>
+          <option value="https://www.tradingview.com/markets/stocks-india/">TradingView India Stocks</option>
+          <option value="https://finance.yahoo.com/">Yahoo Finance</option>
+        </select>
+      </div>
+
+      <div class="button-row">
+        <button class="primary-btn" onclick="loginAndConnect()">Login</button>
+        <button class="secondary-btn" onclick="connectSelectedSite()">Connect To Stock Site</button>
+      </div>
+
+      <p class="auth-note" id="auth-note">
+        Enter any username and password to continue in this local demo.
+      </p>
+    </section>
+  </div>
+
+  <div class="app hidden" id="app-shell">
     <section class="header">
       <div class="header-top">
-        <div class="brand">Fence</div>
+        <div class="brand-wrap">
+          <img class="header-logo" src="/logo.jpeg" alt="Fence logo" />
+          <div class="brand">Fence</div>
+        </div>
         <div class="status">Live review</div>
       </div>
       <p class="header-copy">
@@ -428,8 +536,8 @@
         </div>
 
         <div class="card">
-          <h2>Basic SEBI Regulations</h2>
-          <p class="subtext">Only a few core regulation themes are shown here for quick reference.</p>
+          <h2>SEBI Regulations</h2>
+          <p class="subtext">These 10 basic SEBI regulation points are always shown in the column.</p>
           <div class="regulation-list" id="sebi-list"></div>
         </div>
       </div>
@@ -440,6 +548,19 @@
     let currentRules = [];
     let currentGoal = "";
     const localLogKey = "fence-local-logs";
+    const loginStateKey = "fence-authenticated";
+    const defaultSebiRegulations = [
+      { title: "1. KYC Compliance", summary: "KYC compliance requires every investor to verify identity before trading." },
+      { title: "2. Insider Trading Prohibition", summary: "Insider trading is strictly prohibited using non-public information." },
+      { title: "3. Disclosure Requirements", summary: "Companies must regularly disclose financial and material information." },
+      { title: "4. Fair Trade Practices", summary: "Fair trade practices prevent fraud and market manipulation." },
+      { title: "5. Risk Disclosure", summary: "Investors must be informed about risks before trading." },
+      { title: "6. Margin Requirements", summary: "Traders must maintain required margins for transactions." },
+      { title: "7. Circuit Limits", summary: "Stocks are restricted by circuit limits to control volatility." },
+      { title: "8. Registered Broker Requirement", summary: "Only SEBI-registered brokers can execute trades." },
+      { title: "9. Audit Trail Requirement", summary: "All transactions must be recorded and auditable." },
+      { title: "10. Investor Protection Rules", summary: "Investor protection rules ensure grievance redressal and fund safety." }
+    ];
 
     function getLocalLogs() {
       try {
@@ -454,6 +575,39 @@
       const logs = getLocalLogs();
       logs.push(entry);
       localStorage.setItem(localLogKey, JSON.stringify(logs.slice(-20)));
+    }
+
+    function showApp() {
+      document.getElementById("auth-shell").classList.add("hidden");
+      document.getElementById("app-shell").classList.remove("hidden");
+    }
+
+    function showLogin() {
+      document.getElementById("auth-shell").classList.remove("hidden");
+      document.getElementById("app-shell").classList.add("hidden");
+    }
+
+    function connectSelectedSite() {
+      const site = document.getElementById("stock-site").value;
+      window.open(site, "_blank", "noopener,noreferrer");
+    }
+
+    function loginAndConnect() {
+      const username = document.getElementById("login-username").value.trim();
+      const password = document.getElementById("login-password").value.trim();
+      const note = document.getElementById("auth-note");
+
+      if (!username || !password) {
+        note.textContent = "Please enter both username and password.";
+        note.style.color = "#ff748f";
+        return;
+      }
+
+      localStorage.setItem(loginStateKey, "true");
+      note.textContent = "Login successful. Opening your selected stock site.";
+      note.style.color = "#6ee7a8";
+      showApp();
+      connectSelectedSite();
     }
 
     function setQuickAction(value) {
@@ -497,30 +651,14 @@
       }
     }
 
-    async function loadSebi() {
-      try {
-        const res = await fetch("/sebi");
-        const data = await res.json();
-        const regulations = data.regulations || [];
-        const list = document.getElementById("sebi-list");
-
-        if (!regulations.length) {
-          list.innerHTML = '<div class="empty-state">No SEBI regulations available.</div>';
-          return;
-        }
-
-        list.innerHTML = regulations.map((reg) => `
-          <div class="regulation-card">
-            <span class="regulation-focus">${reg.focus}</span>
-            <h3>${reg.title}</h3>
-            <p>${reg.summary}</p>
-            <p><strong>Fence check:</strong> ${reg.check}</p>
-            <a class="regulation-link" href="${reg.source}" target="_blank" rel="noreferrer">Open source</a>
-          </div>
-        `).join("");
-      } catch (e) {
-        document.getElementById("sebi-list").innerHTML = '<div class="empty-state">Could not load SEBI regulations.</div>';
-      }
+    function renderSebi() {
+      const list = document.getElementById("sebi-list");
+      list.innerHTML = defaultSebiRegulations.map((reg) => `
+        <div class="regulation-card">
+          <h3>${reg.title}</h3>
+          <p>${reg.summary}</p>
+        </div>
+      `).join("");
     }
 
     function renderRules() {
@@ -688,10 +826,20 @@
       `).join("");
     }
 
-    loadConfig();
-    loadSebi();
-    loadLogs();
-    setInterval(loadLogs, 5000);
+    function initializeApp() {
+      renderSebi();
+      loadConfig();
+      loadLogs();
+      setInterval(loadLogs, 5000);
+
+      if (localStorage.getItem(loginStateKey) === "true") {
+        showApp();
+      } else {
+        showLogin();
+      }
+    }
+
+    initializeApp();
   </script>
 </body>
 </html>
